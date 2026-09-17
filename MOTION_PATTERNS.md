@@ -192,21 +192,6 @@ Rules:
 - Avoid decorative clutter.
 - Match selected style preset.
 
-## 13. Slide Deck Navigation Motion
-
-Use only for HTML PPT / deck-like outputs requested through this skill.
-
-**Effect:** slides switch one page at a time with a restrained fade/translate or reference-matched transition.
-
-**Rules:**
-
-- Navigation must be functional before decorative animation.
-- Keep transition duration short enough for presentation use, usually 250–500ms.
-- Do not animate important body text continuously while it is being read.
-- During transitions, only the current and target slides should receive pointer events appropriately; hidden slides must not be clickable.
-- Respect `prefers-reduced-motion` by disabling slide transition transforms and keeping a simple instant/fade switch.
-- Do not implement a deck as scroll-snap sections unless the user explicitly asks for scroll-based storytelling; PPT-style output should use explicit page switching.
-
 ## 14. Motion Risk Matrix
 
 | Risk | Symptom | Fix |

@@ -1,12 +1,5 @@
-# Single HTML Personal Homepage Starter
+# Single HTML homepage starter
 
-Use `personal-homepage.html` when the user wants one portable file with no build step.
+Copy [personal-homepage.html](personal-homepage.html) for a continuous responsive website without a build step. Replace marked content and supply real assets. The starter's dark palette is only an example, not a default recommendation.
 
-Rules:
-
-- Keep CSS and JS inline.
-- Use CJK-safe font stacks.
-- Use relative paths for local images.
-- Keep profile data near the top of the file for editing.
-- Preserve reduced-motion support.
-- Verify desktop and mobile widths before delivery.
+Editing and HTML export are already embedded; use E or the top-left controls, Cmd/Ctrl+S to save and **导出 HTML** to download. Preserve `data-edit-id` values. Read [shared editing/export](../../references/html-editing-export.md) for rebundling, storage and asset portability. Review desktop/mobile with the [homepage workflow](../../HOMEPAGE_GENERATION_WORKFLOW.md).

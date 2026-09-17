@@ -1,10 +1,21 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
 
 const requiredFiles = [
   'package.json',
+  'references/template-selection.md',
+  'references/html-editing-export.md',
+  'references/presenter-mode.md',
+  'assets/template-index.json',
+  'assets/html-runtime.js',
+  'assets/html-runtime.css',
+  'assets/presentation-runtime.js',
+  'assets/presenter.html',
+  'scripts/bundle-html-runtime.mjs',
+  'scripts/find-template.mjs',
+  'tests/html-runtime.test.mjs',
   'index.html',
   'SKILL.md',
   'README.md',
@@ -61,15 +72,10 @@ const requiredTemplates = [
 ];
 
 const requiredSnippets = {
-  'SKILL.md': ['name: personal-homepage-skill', 'Homepage Mode', 'Presentation Mode', 'PRESENTATION_WORKFLOW.md', 'PPT_VISUAL_QA.md', '$SKILL_DIR', 'must not be applied to Homepage Mode', 'Reference first', 'Chinese typography', 'Images must be verified'],
-  'HOMEPAGE_GENERATION_WORKFLOW.md': ['Mode detection', 'Reference-first behavior', 'Style previews', 'Verification'],
-  'PRESENTATION_WORKFLOW.md': ['1920×1080', '16:9', 'keyboard navigation', 'Eight-problem acceptance map', 'Requirement omission', 'Template fidelity', 'Asset selection', 'Visual balance', 'Sparse slides', 'Ineffective changes', 'Shortcut coverage', 'Deletion and numbering', 'Audit-only branch', 'SKILL_DIR', 'NODE_BIN', 'slide-requirements.json', 'template-decomposition.txt', 'visual-review.txt', 'slide requirement ledger', 'data-slide-id', 'verify-html-ppt-stage.mjs', 'capture-slides.mjs', 'Low density / speaker-led', 'High density / reading-first'],
-  'PPT_VISUAL_QA.md': ['two phases', 'Before authoring', 'After rendering', 'Template decomposition', 'Asset priority', 'Visual center', 'Low-text slides', 'Full-size screenshot review'],
   'templates/orbis-nft/README.md': ['Orbis NFT Space Landing Prompt Template', 'liquid-glass', 'Anton', 'Condiment', 'CloudFront video slots'],
   'templates/presentation-html/presentation.html': ['--stage-w: 1920', '--stage-h: 1080', 'class="slide active"', 'data-slide-id=', 'data-original-number=', 'data-slide-title=', 'ArrowRight', 'Escape', 'requestFullscreen'],
   'scripts/capture-slides.mjs': ['qa-report.json', 'slide.dataset.slideId', 'titleBaseline', 'contentBoundingBox', 'bottomSafeZoneViolated'],
   'scripts/verify-html-ppt-stage.mjs': ['duplicate data-slide-id', 'missing or ineffective shortcuts', 'broken images', 'layout/motion transform conflict'],
-  'DESIGN_REVIEW.md': ['Chinese typography', 'Hero section', 'Presentation Mode', 'Images', 'Verification record'],
   'IMAGE_WORKFLOW.md': ['Classify roles', 'Evaluate usability', 'Missing image fallback'],
   'STYLE_PRESETS.md': requiredTemplates,
   'src/index.css': [
@@ -138,6 +144,17 @@ for (const doc of ['SKILL.md', 'README.md', 'STYLE_PRESETS.md', 'HOMEPAGE_GENERA
   if (!content) continue;
   if (/\b(TODO|TBD|FIXME)\b/i.test(content)) {
     failures.push(`${doc} contains placeholder marker TODO/TBD/FIXME`);
+  }
+}
+
+// Resolve active workflow/reference Markdown links instead of pinning prose headings.
+const linkedDocs = ['SKILL.md', 'HOMEPAGE_GENERATION_WORKFLOW.md', 'PRESENTATION_WORKFLOW.md', 'PPT_VISUAL_QA.md', 'DESIGN_REVIEW.md', 'STYLE_PRESETS.md', ...readdirSync(resolve(root,'references')).filter(f=>f.endsWith('.md')).map(f=>'references/'+f), 'templates/single-html/README.md', 'templates/presentation-html/README.md'];
+for (const doc of linkedDocs) {
+  const content = readFileSync(resolve(root,doc),'utf8');
+  for (const match of content.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)) {
+    const link = match[1].split('#')[0];
+    if (!link || /^(https?:|mailto:)/.test(link)) continue;
+    if (!existsSync(resolve(root,doc,'..',link))) failures.push(`${doc}: broken link ${link}`);
   }
 }
 

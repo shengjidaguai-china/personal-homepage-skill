@@ -16,6 +16,8 @@ An AI Skill + template gallery for generating polished personal homepages, portf
 
 > 如果这个项目帮助你生成了更好的个人主页、作品集、创作者主页或 HTML 演示文稿，欢迎点一个 ⭐ Star。
 
+![Personal Homepage Skill 项目介绍](assets/project-intro.gif)
+
 ## Template demos
 
 精选 4 个代表性输出：星球空间、潮玩手办、电影感主页和可直接分享的神经 AI Hero 主页。
@@ -61,13 +63,13 @@ An AI Skill + template gallery for generating polished personal homepages, portf
 - 用户给的视觉参考被忽略
 - 页面缺少统一的视觉系统和内容层次
 
-`personal-homepage-skill` 的目标是让 Agent 在生成个人主页或 HTML 演示文稿时遵守更严格的流程：先理解人和内容目标，再跟随参考，再组织信息架构，最后做视觉和内容质量检查。
+`personal-homepage-skill` 的目标是让 Agent 在生成个人主页或 HTML 演示文稿时遵守按需加载的独立流程：先理解人和内容目标，再跟随参考，再组织信息架构，最后做视觉和内容质量检查。
 
 ## 项目包含什么？
 
 - AI Skill 主入口与生成规则
 - Reference-first 个人主页生成工作流
-- 19 个视觉模板方向
+- 18 个风格预览，以及在 Gallery 中展示的完整 Hero 模板
 - 可交互 React + Tailwind 模板 Gallery
 - 单文件 HTML 主页模板
 - React + Tailwind 主页模板
@@ -77,45 +79,16 @@ An AI Skill + template gallery for generating polished personal homepages, portf
 - 设计自检清单
 - 模板注册表、文档结构和静态视觉检查脚本
 
-## 核心原则
+## 两种独立模式，共享编辑与导出
 
-### 1. 用户给参考，就优先跟随参考
+[SKILL.md](SKILL.md) 只负责识别任务和按需加载。
 
-如果用户提供了具体模板、参考网站、截图描述、详细 Prompt 或 GitHub 作品集模板，Agent 必须优先跟随该参考，而不是先让用户从 3 个自己生成的风格里选。
+- **个人主页**：[制作流程](HOMEPAGE_GENERATION_WORKFLOW.md)与[验收](DESIGN_REVIEW.md)负责连续页面、响应式布局、作品展示和滚动交互。
+- **HTML PPT**：[制作流程](PRESENTATION_WORKFLOW.md)与[视觉验收](PPT_VISUAL_QA.md)负责固定 16:9 画幅、逐页播放、页面重点和完整讲稿；支持[独立演讲者模式](references/presenter-mode.md)。
+- **通用能力**：[编辑与导出](references/html-editing-export.md)由共享代码维护。两个基础 HTML 模板已内嵌，可直接打开、编辑、保存和再次导出。
+- **模板选择**：[可维护索引](references/template-selection.md)对应名称、中文检索词、实际预览和实现文件。18 个风格预览不等于 18 套完整网站或 PPT；用户指定模板时直接遵循，未指定时按人物、场景与素材选择。
 
-需要保留参考的：
-
-- 信息架构
-- 视觉节奏
-- 组件组织方式
-- 字体气质
-- 间距关系
-- 动效模型
-
-### 2. 方向不清楚时，才给真实预览
-
-如果用户没有明确视觉方向，Agent 可以给 2-3 个真实主页首屏预览方向。
-
-预览必须像真实个人主页，而不是选项卡片。视觉画面里不能出现：
-
-- Option A / B / C
-- template name
-- pros / risks
-- workflow notes
-- file name
-- 内部说明文字
-
-### 3. 每个主页都必须回答 5 个问题
-
-1. 这个人是谁？
-2. 他 / 她做什么？
-3. 有哪些项目、内容、经历或作品能证明？
-4. 为什么访问者应该信任？
-5. 访问者下一步应该点击哪里？
-
-### 4. 输出形式要匹配用户目标
-
-Skill 同时支持连续网页和 HTML 演示文稿。Agent 需要先判断用户要的是个人主页、作品集页面，还是 16:9 演示文稿，再选择对应的信息密度、版式节奏、交互方式和质量检查标准。
+新建整套 PPT 时，用真实内容先做好少量代表页并查看实际渲染，再扩展全稿；不新增等待用户确认的步骤。现场演讲默认页面少字、讲稿完整；要求保留原稿时按原语言与顺序保存讲稿，明确要求全文上屏时遵循该要求。
 
 ## 快速开始
 
@@ -142,7 +115,7 @@ npm run dev
 npm run build:hero-portable
 ```
 
-生成结果位于 `templates/hero/portable/`。无需服务器，双击其中的 `index.html` 即可打开；分享时请发送整个文件夹或 ZIP。
+生成结果位于 `templates/hero/portable/`，双击 `index.html` 即可打开；分享时发送整个文件夹或 ZIP。
 
 ### 运行检查
 
@@ -151,13 +124,15 @@ npm run check
 ```
 
 - `npm run dev`：打开可交互模板 Gallery。
-- `npm run check`：运行文档结构、模板注册表和构建检查。
+- `npm run check`：运行文档引用、模板索引和构建检查。
+- `npm run check:all`：加上浏览器与共享运行时回归测试。
+- `npm run test:html-runtime`：单独检查编辑/导出、讲稿同步及页面结构变化。
 
 ## 模板 Gallery
 
-项目内置 19 个视觉方向。实际生成时，Agent 会优先跟随用户给定参考；模板只在方向不清楚或用户主动选择时使用。
+Gallery 展示 18 个风格预览和 1 套完整 Hero 模板。实际生成时，Agent 会优先跟随用户给定参考；模板只在方向不清楚或用户主动选择时使用。
 
-更完整的可交互 Gallery：
+独立静态 Gallery 示例（完整预览组件请运行 `npm run dev`）：
 
 ```text
 demo/template-gallery.html
@@ -166,7 +141,6 @@ demo/template-gallery.html
 | 模板 | 预览 |
 | --- | --- |
 | Cinematic Scroll Personal Brand | ![Cinematic Scroll Personal Brand](assets/template-previews/cinematic-scroll-personal-brand.svg) |
-| Hero Neural Cinematic Homepage | ![Hero Neural Cinematic Homepage](assets/demo-hero-neural-homepage.png) |
 | Soft Product Video Hero | ![Soft Product Video Hero](assets/template-previews/soft-product-video-hero.svg) |
 | Orbis NFT Space Landing | ![Orbis NFT Space Landing](assets/template-previews/orbis-nft-space-landing.svg) |
 | TOONHUB Figurine Carousel | ![TOONHUB Figurine Carousel](assets/template-previews/toonhub-figurine-carousel.svg) |
@@ -225,7 +199,6 @@ demo/template-gallery.html
 | [assets/template-previews/](assets/template-previews/) | 模板预览图片 |
 | [src/](src/) | React + Tailwind 模板 Gallery 源码 |
 | [templates/](templates/) | 可复用主页、HTML 演示文稿和用户授权 prompt 模板 |
-| [templates/hero/](templates/hero/) | 神经 AI 电影感完整模版、原版视频素材和可直接双击的便携版 |
 | [scripts/](scripts/) | 校验脚本 |
 
 </details>

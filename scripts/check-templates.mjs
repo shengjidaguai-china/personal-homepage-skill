@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
@@ -46,6 +46,24 @@ for (const entry of entries) {
 }
 
 if (entries.length < 18) failures.push(`Expected at least 18 templates, found ${entries.length}`);
+
+const catalog = JSON.parse(readFileSync(resolve(root,'assets/template-index.json'),'utf8'));
+const catalogIds = new Set();
+for (const entry of catalog) {
+  if (catalogIds.has(entry.id)) failures.push(`Duplicate catalog ID: ${entry.id}`);
+  catalogIds.add(entry.id);
+  if (!entry.keywordsZh?.length) failures.push(`${entry.id}: missing Chinese search terms`);
+  for (const field of ['preview','implementation','usage']) {
+    if (entry[field] && !existsSync(resolve(root,entry[field]))) failures.push(`${entry.id}: missing ${field} ${entry[field]}`);
+  }
+  if (entry.kind === 'style-preview') {
+    const definition=entries.find(e=>e.id===entry.id);
+    if (!definition || !definition.block.includes(`name: '${entry.name}'`)) failures.push(`${entry.id}: catalog/registry name mismatch`);
+    const impl=readFileSync(resolve(root,entry.implementation),'utf8');
+    if (!impl.includes(`${entry.visual}: ${entry.export}`)) failures.push(`${entry.id}: missing preview mapping`);
+  }
+}
+for (const entry of entries) if (!catalogIds.has(entry.id)) failures.push(`Unindexed style: ${entry.id}`);
 
 if (failures.length) {
   console.error('Template registry check failed:');

@@ -1,0 +1,44 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>演讲者窗口</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f2f1ed;color:#262936;font-family:'PingFang SC','Microsoft YaHei',sans-serif;height:100vh;display:flex;flex-direction:column}header{padding:16px 24px;border-bottom:1px solid #c8c9cc;display:flex;justify-content:space-between;gap:20px}h1{font-size:20px;margin:0 0 6px}p{margin:0;font-size:14px;line-height:1.6}button{font:inherit;background:#fff;border:1px solid #aaa;border-radius:5px;padding:8px 12px;cursor:pointer}button:disabled{opacity:.4}button:focus-visible{outline:3px solid #516dad}.clock{display:flex;align-items:center;gap:10px;flex-wrap:wrap}#timer{font:28px monospace}.layout{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;padding:24px}.left{overflow:auto}.preview{width:100%;aspect-ratio:16/9;border:0;background:#222}.bar{padding:14px;background:#e0e5ed;display:flex;justify-content:space-between;gap:10px;align-items:center}.navigation{display:flex;justify-content:space-between;align-items:center;margin:18px 0}.next{padding:20px;background:#fff}#nextTitle{font-size:24px;margin-top:10px}.notes{display:flex;flex-direction:column;min-height:0;background:white}#notes{white-space:pre-wrap;flex:1;min-height:0;overflow:auto;padding:24px;font-size:24px;line-height:1.8}#notes[contenteditable=true]{outline:3px solid #a47b18;outline-offset:-3px;background:#fffbea}#status{font-size:13px;padding:12px;border-top:1px solid #ddd}.fonts{display:flex;gap:5px}@media(max-width:650px){body{height:auto}.layout{grid-template-columns:1fr}.notes{min-height:400px;max-height:75vh}header{flex-wrap:wrap}}
+</style></head><body><header><div><h1>演讲者窗口</h1><p>只共享幻灯片窗口。扩展屏幕时把讲稿放在未共享的屏幕；共享整屏或镜像投屏会显示该屏幕上的讲稿。</p></div><div class="clock"><span id="timer">00:00</span><button id="pause">开始计时</button><button id="reset">重置</button></div></header><main class="layout"><div class="left"><div class="bar"><span>当前幻灯片</span><span id="currentTitle"></span></div><iframe id="preview" class="preview" sandbox="allow-scripts" title="当前幻灯片预览" tabindex="-1"></iframe><div class="navigation"><button id="prev">← 上一页</button><span id="counter">0 / 0</span><button id="next">下一页 →</button></div><section class="next"><small>下一页提示</small><p id="nextTitle">等待连接</p></section></div><section class="notes"><div class="bar"><span>本页完整讲稿</span><div class="fonts"><button id="smaller" aria-label="缩小讲稿文字">A−</button><button id="larger" aria-label="放大讲稿文字">A＋</button><button id="edit">编辑讲稿</button></div></div><div id="notes" contenteditable="false" tabindex="0"></div><div id="status" role="status">正在连接幻灯片窗口…</div></section></main><script>
+(() => {
+  const source = window.opener, channel = window.name, notes = document.getElementById('notes'), $ = id => document.getElementById(id);
+  let id = null, editing = false, fontSize = 24, elapsed = 0, started = null, lastPreview = '', connected = false;
+  const send = (type, data = {}) => {if (source && !source.closed) source.postMessage({channel,type,...data}, '*');};
+  function editMode(value) {editing=value;notes.contentEditable=String(value);$('edit').textContent=value?'完成编辑':'编辑讲稿';if(value)notes.focus();else notes.blur();}
+  $('edit').onclick=()=>editMode(!editing);
+  notes.addEventListener('input',()=>send('notes-edit',{id,text:notes.innerText}));
+  $('prev').onclick=()=>send('navigate',{delta:-1});$('next').onclick=()=>send('navigate',{delta:1});
+  function font(delta){fontSize=Math.max(16,Math.min(48,fontSize+delta));notes.style.fontSize=fontSize+'px';}
+  $('smaller').onclick=()=>font(-2);$('larger').onclick=()=>font(2);
+  const attr = value => String(value).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+  addEventListener('message', event => {
+    if (event.source!==source || event.data?.channel!==channel || event.data.type!=='state') return;
+    const s=event.data;connected=true;
+    if(id!==s.id){id=s.id;editMode(false);notes.scrollTop=0;}
+    if(!editing)notes.textContent=s.notes;
+    $('counter').textContent=(s.index+1)+' / '+s.total;$('currentTitle').textContent=s.title;
+    $('nextTitle').textContent=s.nextTitle || (s.total?'已到最后一页':'暂无幻灯片');
+    $('prev').disabled=s.index<=0;$('next').disabled=s.index>=s.total-1;$('edit').disabled=!s.id;
+    $('status').textContent='已连接 · 翻页与幻灯片窗口同步';
+    const signature=s.html+s.css+s.base;
+    if(signature!==lastPreview){lastPreview=signature;
+      $('preview').srcdoc='<!doctype html><html><head><base href="'+attr(s.base)+'"><style>'+s.css+'</style><style>[data-motion-layer]{animation:none!important}*{pointer-events:none!important}.stage{box-shadow:none}</style></head><body><div class="viewport"><div class="stage-shell" id="stageShell"><main class="stage" id="stage">'+s.html+'</main></div></div><script>function fit(){document.getElementById("stage").style.setProperty("--scale",document.getElementById("stageShell").getBoundingClientRect().width/1920)}addEventListener("resize",fit);fit();<'+ '/script></body></html>';
+    }
+  });
+  document.addEventListener('keydown',e=>{
+    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='s'){e.preventDefault();send('notes-edit',{id,text:notes.innerText});return;}
+    if(e.key==='Escape'&&editing){e.preventDefault();editMode(false);return;}
+    if(e.target.closest?.('input,textarea,select,[contenteditable=true]')||e.metaKey||e.ctrlKey||e.altKey)return;
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();send('navigate',{delta:1});}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();send('navigate',{delta:-1});}
+    if(e.key==='Home'||e.key==='End'){e.preventDefault();send('navigate',{edge:e.key==='Home'?'first':'last'});}
+  });
+  function time(){return elapsed+(started===null?0:Date.now()-started);}
+  function tick(){const seconds=Math.floor(time()/1000);$('timer').textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');}
+  $('pause').onclick=()=>{if(started===null){started=Date.now();$('pause').textContent='暂停';}else{elapsed=time();started=null;$('pause').textContent='继续';}tick();};
+  $('reset').onclick=()=>{elapsed=0;if(started!==null)started=Date.now();tick();};
+  setInterval(()=>{tick();if(!source||source.closed){$('status').textContent='幻灯片窗口已关闭，请重新打开幻灯片，再按 N。';$('prev').disabled=true;$('next').disabled=true;$('edit').disabled=true;editMode(false);}else if(!connected)send('ready');},1000);
+  send('ready');
+})();
+</script></body></html>

@@ -1,0 +1,325 @@
+[
+  {
+    "id": "cinematic-scroll-personal-brand",
+    "name": "Cinematic Scroll Personal Brand",
+    "keywordsZh": [
+      "电影感",
+      "滚动叙事",
+      "暗色",
+      "视频背景"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/cinematic-scroll-personal-brand.svg",
+    "implementation": "src/previews/tech.tsx",
+    "export": "CinematicPreview",
+    "visual": "cinematic"
+  },
+  {
+    "id": "soft-product-video-hero",
+    "name": "Soft Product Video Hero",
+    "keywordsZh": [
+      "柔和",
+      "产品视频",
+      "浅色",
+      "工具作者"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/soft-product-video-hero.svg",
+    "implementation": "src/previews/creator.tsx",
+    "export": "SoftProductPreview",
+    "visual": "softProduct"
+  },
+  {
+    "id": "orbis-nft-space-landing",
+    "name": "Orbis NFT Space Landing",
+    "keywordsZh": [
+      "太空",
+      "数字藏品",
+      "霓虹",
+      "液态玻璃"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/orbis-nft-space-landing.svg",
+    "implementation": "src/previews/creator.tsx",
+    "export": "OrbisNftPreview",
+    "visual": "orbisNft"
+  },
+  {
+    "id": "toonhub-figurine-carousel",
+    "name": "TOONHUB Figurine Carousel",
+    "keywordsZh": [
+      "潮玩",
+      "手办",
+      "角色轮播",
+      "鲜艳"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/toonhub-figurine-carousel.svg",
+    "implementation": "src/previews/creator.tsx",
+    "export": "ToonhubPreview",
+    "visual": "toonhub"
+  },
+  {
+    "id": "clean-developer-homepage",
+    "name": "Clean Developer Homepage",
+    "keywordsZh": [
+      "清爽",
+      "开发者",
+      "浅蓝白",
+      "个人主页"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/clean-developer-homepage.svg",
+    "implementation": "src/previews/tech.tsx",
+    "export": "CleanDeveloperPreview",
+    "visual": "clean"
+  },
+  {
+    "id": "3d-tech-portfolio",
+    "name": "3D Tech Portfolio",
+    "keywordsZh": [
+      "三维",
+      "空间卡片",
+      "技术作品集"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/3d-tech-portfolio.svg",
+    "implementation": "src/previews/tech.tsx",
+    "export": "Tech3DPreview",
+    "visual": "tech3d"
+  },
+  {
+    "id": "motion-gradient-brand",
+    "name": "Motion Gradient Brand",
+    "keywordsZh": [
+      "渐变",
+      "动效",
+      "个人品牌",
+      "彩色"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/motion-gradient-brand.svg",
+    "implementation": "src/previews/creator.tsx",
+    "export": "GradientPreview",
+    "visual": "gradient"
+  },
+  {
+    "id": "magazine-portfolio",
+    "name": "Magazine Portfolio",
+    "keywordsZh": [
+      "杂志",
+      "封面",
+      "编辑排版",
+      "作品集"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/magazine-portfolio.svg",
+    "implementation": "src/previews/art.tsx",
+    "export": "MagazinePreview",
+    "visual": "magazine"
+  },
+  {
+    "id": "terminal-hacker-homepage",
+    "name": "Terminal Hacker Homepage",
+    "keywordsZh": [
+      "终端",
+      "命令行",
+      "黑客",
+      "开源"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/terminal-hacker-homepage.svg",
+    "implementation": "src/previews/tech.tsx",
+    "export": "TerminalPreview",
+    "visual": "terminal"
+  },
+  {
+    "id": "minimal-premium-resume",
+    "name": "Minimal Premium Resume",
+    "keywordsZh": [
+      "简历",
+      "求职",
+      "极简",
+      "浅色"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/minimal-premium-resume.svg",
+    "implementation": "src/previews/business.tsx",
+    "export": "ResumePreview",
+    "visual": "resume"
+  },
+  {
+    "id": "cute-pixel-creator",
+    "name": "Cute Pixel Creator",
+    "keywordsZh": [
+      "可爱像素",
+      "像素风",
+      "粉色",
+      "游戏任务卡",
+      "创作者"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/cute-pixel-creator.svg",
+    "implementation": "src/previews/creator.tsx",
+    "export": "PixelPreview",
+    "visual": "pixel"
+  },
+  {
+    "id": "ai-system-dashboard",
+    "name": "AI System Dashboard",
+    "keywordsZh": [
+      "系统图",
+      "智能体",
+      "仪表盘",
+      "技术架构"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/ai-system-dashboard.svg",
+    "implementation": "src/previews/tech.tsx",
+    "export": "DashboardPreview",
+    "visual": "dashboard"
+  },
+  {
+    "id": "creator-bento-homepage",
+    "name": "Creator Bento Homepage",
+    "keywordsZh": [
+      "创作者",
+      "便当格",
+      "内容聚合",
+      "平台入口"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/creator-bento-homepage.svg",
+    "implementation": "src/previews/creator.tsx",
+    "export": "BentoPreview",
+    "visual": "bento"
+  },
+  {
+    "id": "dark-editorial-portfolio",
+    "name": "Dark Editorial Portfolio",
+    "keywordsZh": [
+      "暗色画廊",
+      "编辑排版",
+      "作品大图"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/dark-editorial-portfolio.svg",
+    "implementation": "src/previews/art.tsx",
+    "export": "DarkEditorialPreview",
+    "visual": "darkEditorial"
+  },
+  {
+    "id": "spatial-project-gallery",
+    "name": "Spatial Project Gallery",
+    "keywordsZh": [
+      "空间画廊",
+      "项目展台",
+      "三维作品"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/spatial-project-gallery.svg",
+    "implementation": "src/previews/tech.tsx",
+    "export": "SpatialPreview",
+    "visual": "spatial"
+  },
+  {
+    "id": "business-personal-brand",
+    "name": "Business Personal Brand",
+    "keywordsZh": [
+      "商务",
+      "咨询",
+      "个人品牌",
+      "信任"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/business-personal-brand.svg",
+    "implementation": "src/previews/business.tsx",
+    "export": "BusinessPreview",
+    "visual": "business"
+  },
+  {
+    "id": "case-study-portfolio",
+    "name": "Case Study Portfolio",
+    "keywordsZh": [
+      "案例",
+      "项目过程",
+      "作品集",
+      "成果"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/case-study-portfolio.svg",
+    "implementation": "src/previews/business.tsx",
+    "export": "CaseStudyPreview",
+    "visual": "caseStudy"
+  },
+  {
+    "id": "art-museum-portfolio",
+    "name": "Art Museum Portfolio",
+    "keywordsZh": [
+      "美术馆",
+      "策展",
+      "摄影",
+      "纸感"
+    ],
+    "kind": "style-preview",
+    "preview": "assets/template-previews/art-museum-portfolio.svg",
+    "implementation": "src/previews/art.tsx",
+    "export": "MuseumPreview",
+    "visual": "museum"
+  },
+  {
+    "id": "hero-neural-cinematic-homepage",
+    "name": "Hero Neural Cinematic Homepage",
+    "keywordsZh": [
+      "神经网络",
+      "电影感",
+      "视频滚动",
+      "完整主页"
+    ],
+    "kind": "complete-homepage",
+    "preview": "templates/hero/portable/index.html",
+    "implementation": "templates/hero/App.tsx",
+    "usage": "templates/hero/README.md"
+  },
+  {
+    "id": "single-html-starter",
+    "name": "Single HTML Homepage Starter",
+    "keywordsZh": [
+      "单文件",
+      "基础主页",
+      "响应式",
+      "编辑导出"
+    ],
+    "kind": "homepage-starter",
+    "preview": "templates/single-html/personal-homepage.html",
+    "implementation": "templates/single-html/personal-homepage.html",
+    "usage": "templates/single-html/README.md"
+  },
+  {
+    "id": "presentation-html-starter",
+    "name": "16:9 HTML PPT Starter",
+    "keywordsZh": [
+      "幻灯片",
+      "演讲者模式",
+      "讲稿",
+      "基础演示"
+    ],
+    "kind": "presentation-starter",
+    "preview": "templates/presentation-html/presentation.html",
+    "implementation": "templates/presentation-html/presentation.html",
+    "usage": "templates/presentation-html/README.md"
+  },
+  {
+    "id": "react-tailwind-starter",
+    "name": "React Tailwind Homepage Starter",
+    "keywordsZh": [
+      "组件",
+      "基础主页",
+      "响应式"
+    ],
+    "kind": "homepage-source-starter",
+    "preview": null,
+    "implementation": "templates/react-tailwind/App.tsx",
+    "usage": "templates/react-tailwind/README.md"
+  }
+]

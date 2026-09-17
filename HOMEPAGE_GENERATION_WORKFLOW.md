@@ -1,98 +1,35 @@
-# Homepage Generation Workflow
+# Homepage workflow
 
-## 1. Mode detection
+Only for a continuous responsive personal website. Use [DESIGN_REVIEW.md](DESIGN_REVIEW.md) for its acceptance; do not load PPT layout or presenter rules.
 
-Classify the task as one of these modes:
+## Understand and choose
 
-- New homepage from content or topic.
-- Redesign existing homepage or HTML.
-- Improve a generated homepage.
-- Browse/select visual style.
-- Produce a single HTML deliverable.
-- Produce a React/Tailwind project.
+Inspect the provided page, reference and assets. Use known identity, audience, goal, projects and contact routes; ask only for missing information that materially blocks the work. Prefer honest marked placeholders to invented evidence.
 
-If the user gives a specific file path, reference page, or adopted final version, treat it as the primary reference.
+Follow the chosen visual reference. Otherwise use the [template index](references/template-selection.md), inspect the actual previews, and choose for the content. A few real hero previews can help when direction is ambiguous; their number is flexible and they need not create a confirmation gate. Keep option labels and production notes outside the design.
 
-## 2. Discovery
+## Build a continuous page
 
-Gather missing inputs only when they materially affect the result:
+Plan the path from identity to evidence to next action. Select relevant sections: hero, selected projects, capabilities, about/experience, writing or channels, contact. Remove empty sections. Explain each project's problem, personal contribution and result; add method/stack when useful.
 
-- Name and preferred display name.
-- Role or identity.
-- Goal: job seeking, portfolio, creator hub, consulting, art, technical brand.
-- Audience: recruiters, clients, fans, collaborators, admissions, community.
-- Available projects, assets, screenshots, video, portrait, logos, links.
-- Preferred language and tone.
-- Visual references.
-- Delivery format: single HTML or React/Tailwind.
+Use a continuous background and coherent typography, spacing and components. The user's block-based reference may intentionally have visible section boundaries. Create a focal point with the actual content; a second CTA, 3D object or animated background is optional.
 
-Create a lightweight homepage requirement checklist before coding. Keep it short, but map each important original request to known assets, the target section/component, expected interaction state, and acceptance evidence. Mark approved omissions explicitly instead of silently dropping requirements.
+Real images shape the layout: follow [IMAGE_WORKFLOW.md](IMAGE_WORKFLOW.md). Keep meaningful screenshots large and QR codes uncropped with their quiet zones. Motion should aid browsing, respect reduced motion, and have mobile fallbacks.
 
-## 3. Reference-first behavior
+Choose a [single HTML starter](templates/single-html/README.md), [React/Tailwind starter](templates/react-tailwind/README.md), or an indexed complete template. Keep profile data centralized where practical. For standalone HTML load [shared editing/export](references/html-editing-export.md); preserve existing project behavior when editing.
 
-When a reference exists:
+Read these only when needed:
+- [Section content](HOMEPAGE_SECTIONS.md) and [profile data](DATA_SCHEMA.md)
+- [Motion patterns](MOTION_PATTERNS.md) and [components](COMPONENT_PATTERNS.md)
+- [Cinematic style](CINEMATIC_SCROLL_TEMPLATE.md), only when selected
 
-- Preserve the visual rhythm before inventing a new style.
-- Reuse the spacing logic, section order, and typography mood.
-- Match the reference’s density level.
-- Improve only where the user’s content needs adaptation.
-- Do not force a template-selection step unless the user asks for alternatives.
-- Write a structured template decomposition before coding: section rhythm, grid, type scale, media behavior, motion, component states, and density.
-- After implementation, run a desktop/mobile rendered comparison against the reference or adopted version and record the visible deltas.
+## Verify and deliver
 
-## 4. Style previews
+Run relevant project build/checks. Inspect actual desktop and mobile rendering: hierarchy, title wrapping, project/image size, section continuity, bottom spacing, links, touch and keyboard interactions, asset loading and horizontal overflow. Use [homepage review](DESIGN_REVIEW.md). For HTML, test editing, local reload and export/reopen/re-edit. Deliver files and replacement/usage notes; state any unverified external links or dependencies.
 
-When direction is unclear, create 2-3 real homepage hero previews.
+## Focused checks for substantial changes
 
-Preview rules:
-
-- Use real user content when available.
-- Show homepage chrome only when it would exist in the final page: name, nav, CTA, section hint, contact.
-- Do not show internal labels such as option names, template names, file paths, workflow notes, or source-doc labels inside the preview.
-- Make each preview distinct in typography, palette, layout grammar, and motion thesis.
-- The preview must be feasible for a full responsive homepage.
-
-## 5. Image workflow
-
-If assets are provided, follow `IMAGE_WORKFLOW.md` before outlining the page. Images should shape the page, not be added after the layout is fixed.
-
-## 6. Information architecture
-
-Choose density mode and section structure:
-
-- Minimal: hero, proof, contact.
-- Portfolio: hero, selected projects, skills, about, contact.
-- Case study: hero case, problem/role/result, process, evidence, more cases.
-- Creator: hero, platforms, content themes, featured posts, collaboration.
-- Art: hero, collections, artwork wall, statement, contact.
-
-For low-content pages, use a low-content homepage strategy instead of padding the page. Prefer a real large image, one single featured case, editorial whitespace, asymmetric composition, and a strong CTA. Do not fill space with meaningless cards, duplicate metrics, empty icon grids, or fake testimonials.
-
-## 7. Generation rules
-
-- Centralize profile/content data.
-- Use semantic sections and accessible headings.
-- Use CJK-safe font variables.
-- Keep long Chinese text in body scale.
-- Use relative asset paths.
-- Include `prefers-reduced-motion` support.
-- Avoid fake metrics, fake links, fake logos, and fake image URLs.
-- Make project cards specific: problem, role, features, stack, result.
-
-## 8. Verification
-
-Before delivery:
-
-- Run build/check scripts when available.
-- Inspect desktop and mobile widths.
-- Capture or inspect desktop/mobile screenshots when layout or style changed materially.
-- Check final computed styles for the elements that were changed, especially colors, transforms, display, position, z-index, overflow, and font values.
-- Check no horizontal overflow.
-- Check images load or placeholders are intentional.
-- Check assets and key interactions, including navigation, CTA links, filters, editing controls, hover/focus states, and reduced-motion behavior.
-- Check hero title wrapping.
-- Check bottom spacing.
-- Check visual balance between columns.
-- Separate positioning layers from animation layers only when needed to fix ineffective transforms or overridden motion; do not introduce this pattern as a default requirement.
-- Confirm that slide-id, page numbers, 1920×1080, presentation keyboard shortcuts, and bottom safe-zone rules must not be required for Homepage Mode.
-- Review against `DESIGN_REVIEW.md`.
+- Before coding, keep a lightweight homepage requirement checklist linking the original request, assets, target section/component, interaction state and acceptance evidence. Use structured template decomposition when following a reference, then verify with a desktop/mobile rendered comparison.
+- A low-content homepage strategy can use a real large image, a single featured case, editorial whitespace or an asymmetric composition. Avoid meaningless cards added just to fill space.
+- Verify final computed styles, desktop/mobile screenshots, assets and key interactions. Separate positioning layers from animation layers only when needed.
+- PPT slide-id, page numbers, fixed 1920×1080 sizing, presentation keyboard shortcuts and bottom safe-zone rules must not be required for Homepage Mode.

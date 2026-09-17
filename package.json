@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "build:hero-portable": "node scripts/build-hero-portable.mjs",
     "check": "npm run check:spec && npm run check:templates && npm run build",
-    "check:all": "npm run check:spec && npm run check:templates && npm run check:visual && npm run test:homepage-qa-rules && npm run test:ppt-qa && npm run test:homepage-regression && npm run test:hero-template && npm run test:hero-portable && npm run build",
+    "check:all": "npm run check:spec && npm run check:templates && npm run check:visual && npm run test:homepage-qa-rules && npm run test:ppt-qa && npm run test:homepage-regression && npm run test:hero-template && npm run test:hero-portable && npm run test:html-runtime && npm run build",
     "check:spec": "node scripts/check-spec.mjs",
     "check:templates": "node scripts/check-templates.mjs",
     "check:visual": "node scripts/check-visual.mjs",
@@ -16,9 +16,10 @@
     "capture:ppt": "node scripts/capture-slides.mjs",
     "test:ppt-qa": "node tests/verify-html-ppt-stage.test.mjs && node tests/capture-slides.test.mjs",
     "test:homepage-regression": "node tests/homepage-regression.test.mjs",
-    "test:homepage-qa-rules": "node tests/homepage-qa-rules.test.mjs",
     "test:hero-template": "node tests/hero-template.test.mjs",
-    "test:hero-portable": "node tests/hero-portable.test.mjs"
+    "test:hero-portable": "node tests/hero-portable.test.mjs",
+    "test:html-runtime": "node tests/html-runtime.test.mjs",
+    "test:homepage-qa-rules": "node tests/homepage-qa-rules.test.mjs"
   },
   "engines": {
     "node": ">=22"
@@ -31,12 +32,12 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.49",
     "playwright": "^1.55.0",
+    "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
     "vite": "^5.4.21"

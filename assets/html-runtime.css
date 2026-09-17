@@ -1,0 +1,13 @@
+/* Shared editing chrome; independent of homepage/slide layouts. */
+.html-tools{position:fixed;left:0;top:0;z-index:10000;padding:14px;display:flex;gap:8px;opacity:0;transition:opacity .15s;background:#20212a;border-radius:0 0 12px 0;color:#fff}
+.edit-hotzone{position:fixed;left:0;top:0;width:100px;height:64px;z-index:9999}
+.edit-hotzone:hover+.html-tools,.html-tools:hover,.html-tools:focus-within,body.editing .html-tools{opacity:1}
+.html-tools button{position:static;transform:none;opacity:1;pointer-events:auto;font:600 14px/1.4 'PingFang SC','Microsoft YaHei',sans-serif;color:#fff;background:#343744;border:1px solid #777;padding:8px 12px;border-radius:5px;cursor:pointer}
+.html-tools button:focus-visible{outline:3px solid #ffcc68;outline-offset:3px}
+body.editing [data-edit-id]:not([data-note-for]){outline:2px dashed #ed9857;outline-offset:4px;cursor:text}
+.html-status{position:fixed;bottom:50px;left:24px;z-index:10001;background:#20212a;color:#fff;padding:12px 18px;max-width:min(580px,90vw);font:15px/1.6 'PingFang SC',sans-serif}
+.html-status:empty{display:none}
+[data-note-for]{display:none!important}
+@media(hover:none){.html-tools{opacity:1}}
+@media print{.edit-hotzone,.html-tools,.html-status{display:none!important}}
+@media(prefers-reduced-motion:reduce){.html-tools{transition:none}}

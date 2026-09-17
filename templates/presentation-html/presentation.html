@@ -1,10 +1,9 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-edit-key="presentation-template-edits">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>16:9 HTML Presentation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@600;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --stage-w: 1920;
@@ -35,158 +34,229 @@
     .card p { font-size: 25px; line-height: 1.6; }
     .counter { position: fixed; right: 28px; bottom: 24px; z-index: 10; font-family: var(--font-mono); color: rgba(255,255,255,.6); font-size: 13px; }
     .hint { position: fixed; left: 28px; bottom: 24px; z-index: 10; color: rgba(255,255,255,.45); font-size: 13px; }
-    .edit-hotzone { position: fixed; left: 0; top: 0; width: 96px; height: 72px; z-index: 1000; }
-    .edit-toggle { position: fixed; left: 18px; top: 16px; z-index: 1001; opacity: 0; transform: translateY(-6px); pointer-events: none; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 9px 13px; background: rgba(12,12,16,.72); color: var(--ink); font: 800 13px/1 var(--font-body); backdrop-filter: blur(12px); cursor: pointer; transition: opacity .18s ease, transform .18s ease; }
-    .edit-hotzone:hover + .edit-toggle, .edit-toggle:hover, .edit-toggle:focus-visible, body.editing .edit-toggle { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    body.editing [contenteditable="true"] { outline: 2px dashed rgba(255,106,61,.72); outline-offset: 6px; border-radius: 6px; cursor: text; }
-    body.editing [contenteditable="true"]:focus { outline: 3px solid rgba(255,106,61,.9); background: rgba(255,106,61,.08); }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
     @media print { .edit-hotzone, .edit-toggle { display: none !important; } }
   </style>
 </head>
 <body>
-  <div class="edit-hotzone" aria-hidden="true"></div>
-  <button class="edit-toggle" type="button" aria-pressed="false">编辑</button>
   <div class="viewport">
     <div class="stage-shell" id="stageShell">
       <main class="stage" id="stage" aria-live="polite">
         <section class="slide active" aria-label="Slide 1" data-slide-id="opening" data-original-number="01" data-slide-title="把项目讲成一套清楚的 16:9 演示">
-          <div class="kicker">Project / 2026</div>
-          <h1>把项目讲成一套清楚的 16:9 演示</h1>
-          <p class="lead">这里放 1-2 句核心说明。长段中文不要做成巨大标题；需要更多信息时拆成下一页。</p>
+          <div class="kicker" data-edit-id="opening-kicker">Project / 2026</div>
+          <h1 data-edit-id="opening-title">把项目讲成一套清楚的 16:9 演示</h1>
+          <p class="lead" data-edit-id="opening-lead">这里放 1-2 句核心说明。长段中文不要做成巨大标题；需要更多信息时拆成下一页。</p>
         </section>
         <section class="slide" aria-label="Slide 2" data-slide-id="one-idea-per-slide" data-original-number="02" data-slide-title="一页只承担一个主要观点">
-          <h2>一页只承担一个主要观点</h2>
+          <h2 data-edit-id="one-idea-per-slide-title">一页只承担一个主要观点</h2>
           <div class="grid">
-            <article class="card"><h3>问题</h3><p>用短句说明背景和痛点。</p></article>
-            <article class="card"><h3>方案</h3><p>说明你的关键设计或实现。</p></article>
-            <article class="card"><h3>结果</h3><p>展示真实结果；没有数据就写待补充。</p></article>
+            <article class="card"><h3 data-edit-id="one-idea-per-slide-problem-title">问题</h3><p data-edit-id="one-idea-per-slide-problem-body">用短句说明背景和痛点。</p></article>
+            <article class="card"><h3 data-edit-id="one-idea-per-slide-solution-title">方案</h3><p data-edit-id="one-idea-per-slide-solution-body">说明你的关键设计或实现。</p></article>
+            <article class="card"><h3 data-edit-id="one-idea-per-slide-result-title">结果</h3><p data-edit-id="one-idea-per-slide-result-body">展示真实结果；没有数据就写待补充。</p></article>
           </div>
         </section>
       </main>
     </div>
   </div>
-  <div class="hint">← / → / Space 翻页，F 全屏</div>
+  <aside hidden data-note-for="opening" data-edit-id="opening-notes">在这里保留开场的完整讲稿。页面只摘取听众需要看到的重点。</aside>
+  <aside hidden data-note-for="one-idea-per-slide" data-edit-id="one-idea-per-slide-notes">在这里按原稿顺序说明问题、方案和结果。请用真实案例替换占位内容。</aside>
+  <div class="hint">← / → / Space 翻页，F 全屏，N 演讲者模式</div>
   <div class="counter" id="counter">01 / 02</div>
-  <script>
-    const stage = document.getElementById('stage');
-    const stageShell = document.getElementById('stageShell');
-    const slides = [...document.querySelectorAll('.slide')];
-    const counter = document.getElementById('counter');
-    let index = 0;
-
-    function resize() {
-      const scale = stageShell.getBoundingClientRect().width / 1920;
-      stage.style.setProperty('--scale', String(scale));
+<!-- html-runtime:start -->
+<style id="html-runtime-style">/* Shared editing chrome; independent of homepage/slide layouts. */
+.html-tools{position:fixed;left:0;top:0;z-index:10000;padding:14px;display:flex;gap:8px;opacity:0;transition:opacity .15s;background:#20212a;border-radius:0 0 12px 0;color:#fff}
+.edit-hotzone{position:fixed;left:0;top:0;width:100px;height:64px;z-index:9999}
+.edit-hotzone:hover+.html-tools,.html-tools:hover,.html-tools:focus-within,body.editing .html-tools{opacity:1}
+.html-tools button{position:static;transform:none;opacity:1;pointer-events:auto;font:600 14px/1.4 'PingFang SC','Microsoft YaHei',sans-serif;color:#fff;background:#343744;border:1px solid #777;padding:8px 12px;border-radius:5px;cursor:pointer}
+.html-tools button:focus-visible{outline:3px solid #ffcc68;outline-offset:3px}
+body.editing [data-edit-id]:not([data-note-for]){outline:2px dashed #ed9857;outline-offset:4px;cursor:text}
+.html-status{position:fixed;bottom:50px;left:24px;z-index:10001;background:#20212a;color:#fff;padding:12px 18px;max-width:min(580px,90vw);font:15px/1.6 'PingFang SC',sans-serif}
+.html-status:empty{display:none}
+[data-note-for]{display:none!important}
+@media(hover:none){.html-tools{opacity:1}}
+@media print{.edit-hotzone,.html-tools,.html-status{display:none!important}}
+@media(prefers-reduced-motion:reduce){.html-tools{transition:none}}
+</style>
+<script id="html-runtime">
+/* Shared runtime. Source of truth: assets/html-runtime.js; inline with bundle-html-runtime.mjs. */
+(() => {
+  'use strict';
+  if (window.HtmlTools) return;
+  const root = document.documentElement;
+  const hotzone = document.createElement('div');
+  hotzone.className = 'edit-hotzone';
+  hotzone.setAttribute('aria-hidden', 'true');
+  const toolbar = document.createElement('div');
+  toolbar.className = 'html-tools';
+  toolbar.innerHTML = '<button class="edit-toggle" aria-pressed="false">编辑</button><button id="exportHtml">导出 HTML</button>';
+  const status = document.createElement('div');
+  status.className = 'html-status'; status.setAttribute('role', 'status');
+  for (const el of [hotzone, toolbar, status]) el.dataset.runtimeGenerated = '';
+  document.body.append(hotzone, toolbar, status);
+  let active = false, warningTimer;
+  const key = (root.dataset.editKey || 'html-edits') + ':' + location.pathname + (root.dataset.editVersion ? ':' + root.dataset.editVersion : '');
+  let saved = {};
+  try { const data = JSON.parse(localStorage.getItem(key) || '{}'); if (data && typeof data === 'object' && !Array.isArray(data)) saved = data; } catch {}
+  const nodes = () => [...document.querySelectorAll('[data-edit-id]')];
+  function notify(text) { status.textContent = text; clearTimeout(warningTimer); warningTimer = setTimeout(() => status.textContent = '', 6000); }
+  function refresh({restore = false} = {}) {
+    const ids = new Set();
+    for (const n of nodes()) {
+      const id = n.dataset.editId;
+      if (!id || ids.has(id)) { notify('编辑 ID 缺失或重复，请先修复页面中的 data-edit-id'); continue; }
+      ids.add(id);
+      if (restore && Object.hasOwn(saved, id) && typeof saved[id] === 'string') n.innerHTML = saved[id];
+      n.contentEditable = String(active && !n.hasAttribute('data-note-for'));
+      n.spellcheck = false;
     }
+  }
+  function save() {
+    // Retain IDs of temporarily filtered-out items; never map by DOM position.
+    for (const n of nodes()) saved[n.dataset.editId] = n.innerHTML;
+    try { localStorage.setItem(key, JSON.stringify(saved)); }
+    catch { notify('本地保存不可用或空间不足，请导出 HTML 保存修改。'); }
+    document.dispatchEvent(new CustomEvent('html:change'));
+  }
+  function setActive(value) {
+    active = Boolean(value); document.body.classList.toggle('editing', active);
+    toolbar.querySelector('.edit-toggle').textContent = active ? '结束编辑' : '编辑';
+    toolbar.querySelector('.edit-toggle').setAttribute('aria-pressed', String(active));
+    refresh();
+    if (!active) { if (document.activeElement?.closest('[data-edit-id]')) document.activeElement.blur(); save(); }
+  }
+  function exportHTML() {
+    save();
+    const clone = root.cloneNode(true);
+    clone.dataset.editVersion = 'export-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    clone.querySelector('body').classList.remove('editing');
+    clone.querySelectorAll('[data-runtime-generated]').forEach(n => n.remove());
+    clone.querySelectorAll('[contenteditable]').forEach(n => n.setAttribute('contenteditable', 'false'));
+    document.dispatchEvent(new CustomEvent('html:before-export', {detail: {clone}}));
+    const url = URL.createObjectURL(new Blob(['<!doctype html>\n' + clone.outerHTML], {type:'text/html;charset=utf-8'}));
+    const a = document.createElement('a'); a.href = url;
+    a.download = (root.dataset.exportName || document.title || 'page').replace(/[\\/:*?"<>|]/g, '-') + '.html';
+    a.click(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+  const isTyping = target => Boolean(target?.closest?.('input,textarea,select,[contenteditable="true"]'));
+  toolbar.querySelector('.edit-toggle').onclick = () => setActive(!active);
+  toolbar.querySelector('#exportHtml').onclick = exportHTML;
+  hotzone.onclick = () => setActive(!active);
+  document.addEventListener('input', e => { if (e.target.closest?.('[data-edit-id]')) save(); });
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') { e.preventDefault(); save(); return; }
+    if (e.key === 'Escape' && active) { e.preventDefault(); setActive(false); return; }
+    if (e.metaKey || e.ctrlKey || e.altKey || isTyping(e.target)) return;
+    if (e.key.toLowerCase() === 'e') { e.preventDefault(); setActive(!active); }
+  });
+  window.HtmlTools = {save, refresh, setActive, exportHTML, notify, isTyping, toolbar, get active() {return active;}, key};
+  refresh({restore:true});
+})();
 
-    function go(next) {
-      index = Math.max(0, Math.min(slides.length - 1, next));
-      slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
-      counter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
-      location.hash = `slide-${index + 1}`;
-    }
-
-    window.addEventListener('resize', resize);
-    document.addEventListener('keydown', (event) => {
-      if (event.target.closest && event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
-      if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(event.key)) { event.preventDefault(); go(index + 1); }
-      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key)) { event.preventDefault(); go(index - 1); }
-      if (event.key === 'Home') { event.preventDefault(); go(0); }
-      if (event.key === 'End') { event.preventDefault(); go(slides.length - 1); }
-      if (event.key.toLowerCase() === 'f' && document.fullscreenEnabled) {
-        event.preventDefault();
-        document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
-      }
+</script>
+<script type="application/json" id="presenter-document">"\u003c!doctype html>\u003chtml lang=\"zh-CN\">\u003chead>\u003cmeta charset=\"utf-8\">\u003cmeta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\u003ctitle>演讲者窗口\u003c/title>\u003cstyle>\n*{box-sizing:border-box}body{margin:0;background:#f2f1ed;color:#262936;font-family:'PingFang SC','Microsoft YaHei',sans-serif;height:100vh;display:flex;flex-direction:column}header{padding:16px 24px;border-bottom:1px solid #c8c9cc;display:flex;justify-content:space-between;gap:20px}h1{font-size:20px;margin:0 0 6px}p{margin:0;font-size:14px;line-height:1.6}button{font:inherit;background:#fff;border:1px solid #aaa;border-radius:5px;padding:8px 12px;cursor:pointer}button:disabled{opacity:.4}button:focus-visible{outline:3px solid #516dad}.clock{display:flex;align-items:center;gap:10px;flex-wrap:wrap}#timer{font:28px monospace}.layout{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;padding:24px}.left{overflow:auto}.preview{width:100%;aspect-ratio:16/9;border:0;background:#222}.bar{padding:14px;background:#e0e5ed;display:flex;justify-content:space-between;gap:10px;align-items:center}.navigation{display:flex;justify-content:space-between;align-items:center;margin:18px 0}.next{padding:20px;background:#fff}#nextTitle{font-size:24px;margin-top:10px}.notes{display:flex;flex-direction:column;min-height:0;background:white}#notes{white-space:pre-wrap;flex:1;min-height:0;overflow:auto;padding:24px;font-size:24px;line-height:1.8}#notes[contenteditable=true]{outline:3px solid #a47b18;outline-offset:-3px;background:#fffbea}#status{font-size:13px;padding:12px;border-top:1px solid #ddd}.fonts{display:flex;gap:5px}@media(max-width:650px){body{height:auto}.layout{grid-template-columns:1fr}.notes{min-height:400px;max-height:75vh}header{flex-wrap:wrap}}\n\u003c/style>\u003c/head>\u003cbody>\u003cheader>\u003cdiv>\u003ch1>演讲者窗口\u003c/h1>\u003cp>只共享幻灯片窗口。扩展屏幕时把讲稿放在未共享的屏幕；共享整屏或镜像投屏会显示该屏幕上的讲稿。\u003c/p>\u003c/div>\u003cdiv class=\"clock\">\u003cspan id=\"timer\">00:00\u003c/span>\u003cbutton id=\"pause\">开始计时\u003c/button>\u003cbutton id=\"reset\">重置\u003c/button>\u003c/div>\u003c/header>\u003cmain class=\"layout\">\u003cdiv class=\"left\">\u003cdiv class=\"bar\">\u003cspan>当前幻灯片\u003c/span>\u003cspan id=\"currentTitle\">\u003c/span>\u003c/div>\u003ciframe id=\"preview\" class=\"preview\" sandbox=\"allow-scripts\" title=\"当前幻灯片预览\" tabindex=\"-1\">\u003c/iframe>\u003cdiv class=\"navigation\">\u003cbutton id=\"prev\">← 上一页\u003c/button>\u003cspan id=\"counter\">0 / 0\u003c/span>\u003cbutton id=\"next\">下一页 →\u003c/button>\u003c/div>\u003csection class=\"next\">\u003csmall>下一页提示\u003c/small>\u003cp id=\"nextTitle\">等待连接\u003c/p>\u003c/section>\u003c/div>\u003csection class=\"notes\">\u003cdiv class=\"bar\">\u003cspan>本页完整讲稿\u003c/span>\u003cdiv class=\"fonts\">\u003cbutton id=\"smaller\" aria-label=\"缩小讲稿文字\">A−\u003c/button>\u003cbutton id=\"larger\" aria-label=\"放大讲稿文字\">A＋\u003c/button>\u003cbutton id=\"edit\">编辑讲稿\u003c/button>\u003c/div>\u003c/div>\u003cdiv id=\"notes\" contenteditable=\"false\" tabindex=\"0\">\u003c/div>\u003cdiv id=\"status\" role=\"status\">正在连接幻灯片窗口…\u003c/div>\u003c/section>\u003c/main>\u003cscript>\n(() => {\n  const source = window.opener, channel = window.name, notes = document.getElementById('notes'), $ = id => document.getElementById(id);\n  let id = null, editing = false, fontSize = 24, elapsed = 0, started = null, lastPreview = '', connected = false;\n  const send = (type, data = {}) => {if (source && !source.closed) source.postMessage({channel,type,...data}, '*');};\n  function editMode(value) {editing=value;notes.contentEditable=String(value);$('edit').textContent=value?'完成编辑':'编辑讲稿';if(value)notes.focus();else notes.blur();}\n  $('edit').onclick=()=>editMode(!editing);\n  notes.addEventListener('input',()=>send('notes-edit',{id,text:notes.innerText}));\n  $('prev').onclick=()=>send('navigate',{delta:-1});$('next').onclick=()=>send('navigate',{delta:1});\n  function font(delta){fontSize=Math.max(16,Math.min(48,fontSize+delta));notes.style.fontSize=fontSize+'px';}\n  $('smaller').onclick=()=>font(-2);$('larger').onclick=()=>font(2);\n  const attr = value => String(value).replace(/&/g,'&amp;').replace(/\"/g,'&quot;').replace(/\u003c/g,'&lt;');\n  addEventListener('message', event => {\n    if (event.source!==source || event.data?.channel!==channel || event.data.type!=='state') return;\n    const s=event.data;connected=true;\n    if(id!==s.id){id=s.id;editMode(false);notes.scrollTop=0;}\n    if(!editing)notes.textContent=s.notes;\n    $('counter').textContent=(s.index+1)+' / '+s.total;$('currentTitle').textContent=s.title;\n    $('nextTitle').textContent=s.nextTitle || (s.total?'已到最后一页':'暂无幻灯片');\n    $('prev').disabled=s.index\u003c=0;$('next').disabled=s.index>=s.total-1;$('edit').disabled=!s.id;\n    $('status').textContent='已连接 · 翻页与幻灯片窗口同步';\n    const signature=s.html+s.css+s.base;\n    if(signature!==lastPreview){lastPreview=signature;\n      $('preview').srcdoc='\u003c!doctype html>\u003chtml>\u003chead>\u003cbase href=\"'+attr(s.base)+'\">\u003cstyle>'+s.css+'\u003c/style>\u003cstyle>[data-motion-layer]{animation:none!important}*{pointer-events:none!important}.stage{box-shadow:none}\u003c/style>\u003c/head>\u003cbody>\u003cdiv class=\"viewport\">\u003cdiv class=\"stage-shell\" id=\"stageShell\">\u003cmain class=\"stage\" id=\"stage\">'+s.html+'\u003c/main>\u003c/div>\u003c/div>\u003cscript>function fit(){document.getElementById(\"stage\").style.setProperty(\"--scale\",document.getElementById(\"stageShell\").getBoundingClientRect().width/1920)}addEventListener(\"resize\",fit);fit();\u003c'+ '/script>\u003c/body>\u003c/html>';\n    }\n  });\n  document.addEventListener('keydown',e=>{\n    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='s'){e.preventDefault();send('notes-edit',{id,text:notes.innerText});return;}\n    if(e.key==='Escape'&&editing){e.preventDefault();editMode(false);return;}\n    if(e.target.closest?.('input,textarea,select,[contenteditable=true]')||e.metaKey||e.ctrlKey||e.altKey)return;\n    if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();send('navigate',{delta:1});}\n    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();send('navigate',{delta:-1});}\n    if(e.key==='Home'||e.key==='End'){e.preventDefault();send('navigate',{edge:e.key==='Home'?'first':'last'});}\n  });\n  function time(){return elapsed+(started===null?0:Date.now()-started);}\n  function tick(){const seconds=Math.floor(time()/1000);$('timer').textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');}\n  $('pause').onclick=()=>{if(started===null){started=Date.now();$('pause').textContent='暂停';}else{elapsed=time();started=null;$('pause').textContent='继续';}tick();};\n  $('reset').onclick=()=>{elapsed=0;if(started!==null)started=Date.now();tick();};\n  setInterval(()=>{tick();if(!source||source.closed){$('status').textContent='幻灯片窗口已关闭，请重新打开幻灯片，再按 N。';$('prev').disabled=true;$('next').disabled=true;$('edit').disabled=true;editMode(false);}else if(!connected)send('ready');},1000);\n  send('ready');\n})();\n\u003c/script>\u003c/body>\u003c/html>\n"</script>
+<script id="presentation-runtime">
+/* PPT-only runtime; shared HtmlTools must be initialized first. */
+(() => {
+  'use strict';
+  const tools = window.HtmlTools, stage = document.getElementById('stage'), shell = document.getElementById('stageShell');
+  if (!tools || !stage || !shell || window.DeckPlayer) return;
+  const slides = () => [...stage.querySelectorAll('.slide')];
+  let index = 0, activeId = null, presenter = null;
+  const channel = 'html-presenter-' + Math.random().toString(36).slice(2);
+  const button = document.createElement('button'); button.id = 'presenterToggle'; button.textContent = '演讲者模式';
+  tools.toolbar.append(button);
+  const noteFor = id => [...document.querySelectorAll('[data-note-for]')].find(n => n.dataset.noteFor === id);
+  const titleFor = slide => slide?.querySelector('h1,h2')?.textContent || slide?.dataset.slideTitle || '';
+  const countText = (n, total) => String(n).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+  function syncPresenter() {
+    if (!presenter || presenter.closed) return;
+    const list = slides(), slide = list[index];
+    const preview = slide?.cloneNode(true);
+    preview?.querySelectorAll('[contenteditable]').forEach(n => n.contentEditable = 'false');
+    preview?.querySelectorAll('script,iframe,object,embed').forEach(n => n.remove());
+    const css = [...document.querySelectorAll('style')].map(n => n.textContent).join('\n');
+    presenter.postMessage({channel, type:'state', id:slide?.dataset.slideId || null, index:slide ? index : -1, total:list.length,
+      title:titleFor(slide), nextTitle:titleFor(list[index+1]), notes:noteFor(slide?.dataset.slideId)?.textContent || '',
+      html:preview?.outerHTML || '', css, base:document.baseURI}, '*');
+  }
+  function go(next, hash = true) {
+    const list = slides();
+    index = Math.max(0, Math.min(list.length - 1, next)); activeId = list[index]?.dataset.slideId || null;
+    list.forEach((s, i) => {
+      s.classList.toggle('active', i === index); s.setAttribute('aria-hidden', String(i !== index));
+      s.inert = i !== index;
+      s.querySelectorAll('.page-number').forEach(n => n.textContent = countText(i+1,list.length));
     });
-
-    const match = location.hash.match(/slide-(\d+)/);
-    resize();
-    if (match) go(Number(match[1]) - 1);
-
-    class InlineEditor {
-      constructor() {
-        this.key = `presentation-template-edits:${location.pathname}`;
-        this.button = document.querySelector('.edit-toggle');
-        this.nodes = [];
-        this.isActive = false;
-        this.load();
-        this.bind();
-      }
-
-      collect() {
-        this.nodes = [...document.querySelectorAll('.slide .kicker, .slide h1, .slide h2, .slide p, .slide h3')];
-        const seen = {};
-        this.nodes.forEach((node) => {
-          if (node.dataset.editId) return;
-          const slide = node.closest('.slide');
-          const slideId = slide?.dataset.slideId || 'page';
-          const role = node.classList[0] || node.tagName.toLowerCase();
-          const base = `slide-${slideId}-${role}`.replace(/[^a-zA-Z0-9_-]+/g, '-').toLowerCase();
-          const count = seen[base] || 0;
-          seen[base] = count + 1;
-          node.dataset.editId = count ? `${base}-${count + 1}` : base;
-        });
-      }
-
-      load() {
-        this.collect();
-        const saved = this.readData();
-        this.nodes.forEach((node) => {
-          if (typeof saved[node.dataset.editId] === 'string') node.innerHTML = saved[node.dataset.editId];
-        });
-      }
-
-      save() {
-        const data = {};
-        this.nodes.forEach((node) => { data[node.dataset.editId] = node.innerHTML; });
-        localStorage.setItem(this.key, JSON.stringify(data));
-        this.button.textContent = '已保存';
-        window.setTimeout(() => { this.button.textContent = this.isActive ? '编辑中' : '编辑'; }, 900);
-      }
-
-      readData() {
-        try {
-          const data = JSON.parse(localStorage.getItem(this.key) || '{}');
-          return data && !Array.isArray(data) ? data : {};
-        } catch (error) {
-          localStorage.removeItem(this.key);
-          return {};
-        }
-      }
-
-      setActive(active) {
-        this.isActive = active;
-        document.body.classList.toggle('editing', active);
-        this.button.setAttribute('aria-pressed', String(active));
-        this.button.textContent = active ? '编辑中' : '编辑';
-        this.nodes.forEach((node) => {
-          node.setAttribute('contenteditable', active ? 'true' : 'false');
-          node.setAttribute('spellcheck', 'false');
-        });
-        if (!active) this.save();
-      }
-
-      bind() {
-        this.button.addEventListener('click', () => this.setActive(!this.isActive));
-        this.nodes.forEach((node) => node.addEventListener('input', () => this.save()));
-        document.addEventListener('keydown', (event) => {
-          const typingContext = event.target.closest && event.target.closest('input, textarea, select, [contenteditable="true"]');
-          if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 's') {
-            event.preventDefault();
-            this.save();
-          } else if (!typingContext && event.key.toLowerCase() === 'e') {
-            event.preventDefault();
-            this.setActive(!this.isActive);
-          } else if (event.key === 'Escape' && this.isActive) {
-            event.preventDefault();
-            this.setActive(false);
-          }
-        });
-      }
+    const counter = document.getElementById('counter'); if (counter) counter.textContent = countText(list.length ? index+1 : 0,list.length);
+    if (hash && activeId) history.replaceState(null, '', '#' + encodeURIComponent(activeId));
+    syncPresenter();
+  }
+  function refresh() {
+    const found = slides().findIndex(s => s.dataset.slideId === activeId);
+    tools.refresh(); go(found >= 0 ? found : index);
+  }
+  function fromHash() {
+    let hash; try { hash = decodeURIComponent(location.hash.slice(1)); } catch {hash = '';}
+    const found = slides().findIndex(s => s.dataset.slideId === hash), legacy = hash.match(/^slide-(\d+)$/);
+    go(found >= 0 ? found : legacy ? Number(legacy[1])-1 : index, false);
+  }
+  function resize() { stage.style.setProperty('--scale', String(shell.getBoundingClientRect().width / 1920)); }
+  function openPresenter() {
+    if (presenter && !presenter.closed) {presenter.focus(); syncPresenter(); return;}
+    presenter = window.open('', channel, 'popup=yes,width=1280,height=860,resizable=yes,scrollbars=yes');
+    if (!presenter) {tools.notify('演讲者窗口被拦截。请允许本页弹出窗口，再点击演讲者模式或按 N。');return;}
+    // The presenter template is bundled as inert JSON, with no personal content.
+    const source = JSON.parse(document.getElementById('presenter-document').textContent);
+    presenter.document.open(); presenter.document.write(source); presenter.document.close();
+    presenter.focus();
+  }
+  window.addEventListener('message', event => {
+    if (!presenter || event.source !== presenter || event.data?.channel !== channel) return;
+    const d = event.data;
+    if (d.type === 'ready') syncPresenter();
+    if (d.type === 'navigate') {
+      if (d.edge === 'first') go(0); else if (d.edge === 'last') go(slides().length-1);
+      else if (d.delta === 1 || d.delta === -1) go(index+d.delta);
     }
+    if (d.type === 'notes-edit' && typeof d.text === 'string' && slides().some(s => s.dataset.slideId === d.id)) {
+      const n = noteFor(d.id); if (n) {n.textContent = d.text; tools.save();}
+    }
+  });
+  button.onclick = openPresenter;
+  document.addEventListener('keydown', e => {
+    if (e.defaultPrevented || tools.isTyping(e.target) || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)) {e.preventDefault();go(index+1);}
+    if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)) {e.preventDefault();go(index-1);}
+    if (e.key === 'Home') {e.preventDefault();go(0);}
+    if (e.key === 'End') {e.preventDefault();go(slides().length-1);}
+    if (e.key.toLowerCase() === 'n') {e.preventDefault();openPresenter();}
+    if (e.key.toLowerCase() === 'f') {
+      e.preventDefault();
+      const action = document.fullscreenElement ? document.exitFullscreen?.() : document.documentElement.requestFullscreen?.();
+      action?.catch(() => tools.notify('浏览器未允许全屏，可使用浏览器全屏菜单。'));
+    }
+  });
+  let touch;
+  stage.addEventListener('touchstart', e => {touch = tools.isTyping(e.target) ? null : e.changedTouches[0];}, {passive:true});
+  stage.addEventListener('touchend', e => {if (!touch) return; const t = e.changedTouches[0], dx = t.clientX-touch.clientX, dy = t.clientY-touch.clientY; if (Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)) go(index+(dx<0?1:-1)); touch=null;}, {passive:true});
+  document.addEventListener('html:change', () => {
+    slides().forEach(s => s.dataset.slideTitle = titleFor(s)); syncPresenter();
+  });
+  document.addEventListener('html:before-export', e => {
+    e.detail.clone.querySelectorAll('.slide-dots').forEach(n => n.replaceChildren());
+    const list = [...e.detail.clone.querySelectorAll('.slide')];
+    list.forEach((s,i) => {s.classList.toggle('active',i===0);s.setAttribute('aria-hidden',String(i!==0));s.inert=i!==0;});
+    const counter = e.detail.clone.querySelector('#counter'); if (counter) counter.textContent = countText(list.length?1:0,list.length);
+  });
+  new MutationObserver(records => {
+    if (records.some(r => [...r.addedNodes,...r.removedNodes].some(n => n.nodeType === 1 && (n.matches('.slide') || n.querySelector('.slide'))))) refresh();
+  }).observe(stage, {childList:true,subtree:true});
+  addEventListener('resize',resize); addEventListener('hashchange',fromHash);
+  window.DeckPlayer = {go,refresh,openPresenter,syncPresenter,get index(){return index;}};
+  resize();fromHash();
+})();
 
-    new InlineEditor();
-  </script>
+</script>
+<!-- html-runtime:end -->
 </body>
 </html>

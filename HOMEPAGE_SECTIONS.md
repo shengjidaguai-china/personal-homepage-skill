@@ -2,7 +2,7 @@
 
 Use this file to decide what each section should contain, how it should look, and what to avoid.
 
-## Default Section Order
+## Candidate Section Order
 
 ```text
 Hero
@@ -17,7 +17,7 @@ Contact
 Footer
 ```
 
-Remove irrelevant sections. Do not fill with fluff.
+Homepage Mode only. Choose and reorder sections for the user’s goal; these are content guides, not mandatory page structure. Remove irrelevant sections. Do not fill with fluff. A portrait, secondary CTA and background motion are optional.
 
 ## 1. Hero
 
@@ -25,7 +25,7 @@ Remove irrelevant sections. Do not fill with fluff.
 
 Make the visitor remember the person in 5 seconds.
 
-### Must include
+### Useful ingredients
 
 - name / nickname
 - professional identity
@@ -158,7 +158,7 @@ Tools as supporting detail
 
 Provide the strongest proof of capability.
 
-### Required fields per project
+### Useful fields per project
 
 ```text
 Project name

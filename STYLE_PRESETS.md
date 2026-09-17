@@ -2,17 +2,11 @@
 
 Use this file to choose a visual direction based on user identity, goal, content, and risk level. Do not force all users into one style.
 
-## Selection Rules
+## Selection
 
-| User type | Best presets |
-| --- | --- |
-| AI engineer / technical founder / indie developer | Cinematic Scroll Personal Brand, Clean Developer Homepage, 3D Tech Portfolio, AI System Dashboard, Terminal Hacker, Spatial Project Gallery |
-| Frontend engineer / creative developer | Clean Developer Homepage, Cinematic Scroll Personal Brand, 3D Tech Portfolio, Motion Gradient Brand, Spatial Project Gallery, TOONHUB Figurine Carousel |
-| Designer / artist / photographer / portfolio applicant | Art Museum Portfolio, Magazine Portfolio, Dark Editorial Portfolio, Spatial Project Gallery |
-| Creator / influencer / self-media | Cinematic Scroll Personal Brand, Motion Gradient Brand, Creator Bento Homepage, Cute Pixel Creator, TOONHUB Figurine Carousel |
-| Job seeker / student / intern | Minimal Premium Resume, Case Study Portfolio |
-| Consultant / freelancer / founder | Cinematic Scroll Personal Brand, Business Personal Brand, Minimal Premium Resume, Motion Gradient Brand |
-| Premium product / creator landing reference | Soft Product Video Hero, Orbis NFT Space Landing, TOONHUB Figurine Carousel, Cinematic Scroll Personal Brand, Motion Gradient Brand |
+Use the [maintained template index](references/template-selection.md) to find names, Chinese search terms, actual previews and implementation paths. Inspect candidates before choosing. Follow the user's explicit template; otherwise consider audience, assets, tone and content. Identity tags are search aids, not automatic rankings. AI does not default to a dark terminal; premium can be light, colorful or restrained. Cute Pixel Creator is one available style, not the default.
+
+The descriptions below describe visual vocabulary. Homepage hero/section/motion suggestions apply to homepages; for PPT translate the vocabulary into fixed slides using the presentation workflow.
 
 ## 0. Cinematic Scroll Personal Brand
 

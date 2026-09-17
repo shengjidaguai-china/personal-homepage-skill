@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://personaproof.dev/schemas/consent-grant.schema.json",
+  "title": "ConsentGrant",
+  "type": "object",
+  "required": ["grantId", "subjectId", "source", "purpose", "scope", "status", "grantedAt", "expiresAt"],
+  "properties": {
+    "grantId": { "type": "string", "pattern": "^grant_[A-Za-z0-9_-]+$" },
+    "subjectId": { "type": "string" },
+    "source": { "type": "string" },
+    "purpose": { "type": "string" },
+    "scope": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "accessMode": { "enum": ["local-read", "remote-read", "publish-write"] },
+    "status": { "enum": ["active", "revoked", "expired"] },
+    "grantedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" },
+    "revokedAt": { "type": ["string", "null"], "format": "date-time" },
+    "policyVersion": { "type": "string" },
+    "traceId": { "type": "string" }
+  },
+  "additionalProperties": false
+}

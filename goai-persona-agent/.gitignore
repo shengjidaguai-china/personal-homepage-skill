@@ -1,0 +1,14 @@
+node_modules/
+packages/*/node_modules/
+packages/*/lib/
+.runtime/
+artifacts/screenshots/*
+!artifacts/screenshots/01-workbench-direction-desktop.png
+!artifacts/screenshots/02-agentteams-trace-desktop.png
+!artifacts/screenshots/03-homepage-preview-desktop.png
+!artifacts/screenshots/04-evidence-rollback-desktop.png
+!artifacts/screenshots/07-homepage-preview-mobile-fixed.png
+!artifacts/screenshots/08-agentteams-trace-desktop-1440x900.png
+!artifacts/screenshots/09-simple-option3-desktop-1440x1024.png
+!artifacts/screenshots/10-simple-option3-mobile-390x844.png
+*.log

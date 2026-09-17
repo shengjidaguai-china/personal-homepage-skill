@@ -1,0 +1,17 @@
+{
+  "projectId": "personaproof-demo-001",
+  "planType": "dag",
+  "tasks": [
+    { "taskId": "pp-01", "title": "分析本地资料与访谈缺口", "assignedTo": "persona-discovery", "dependsOn": [] },
+    { "taskId": "pp-g1", "title": "用户确认品牌定位", "assignedTo": "human", "dependsOn": ["pp-01"] },
+    { "taskId": "pp-g2", "title": "用户逐项授权数据源", "assignedTo": "human", "dependsOn": ["pp-g1"] },
+    { "taskId": "pp-02", "title": "采集授权证据并建立台账", "assignedTo": "persona-evidence", "dependsOn": ["pp-g2"] },
+    { "taskId": "pp-03", "title": "生成品牌策略简报", "assignedTo": "persona-strategy", "dependsOn": ["pp-02"] },
+    { "taskId": "pp-04", "title": "生成内容与信息架构", "assignedTo": "persona-content", "dependsOn": ["pp-03"] },
+    { "taskId": "pp-05", "title": "生成视觉规范", "assignedTo": "persona-visual", "dependsOn": ["pp-04"] },
+    { "taskId": "pp-06", "title": "实现个人品牌网站", "assignedTo": "persona-frontend", "dependsOn": ["pp-05"] },
+    { "taskId": "pp-07", "title": "事实、隐私、可用性与安全审计", "assignedTo": "persona-qa", "dependsOn": ["pp-06"] },
+    { "taskId": "pp-g3", "title": "用户发布前最终审阅", "assignedTo": "human", "dependsOn": ["pp-07"] },
+    { "taskId": "pp-08", "title": "发布并保存回滚点", "assignedTo": "persona-delivery", "dependsOn": ["pp-g3"] }
+  ]
+}

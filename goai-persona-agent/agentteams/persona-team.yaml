@@ -1,0 +1,136 @@
+# AgentTeams v1beta1 reference manifest.
+# Replace ${PERSONA_MODEL} with an installed OpenAI-compatible model ID before apply.
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: persona-discovery
+spec:
+  model: ${PERSONA_MODEL}
+  runtime: qwenpaw
+  identity: 洞察与访谈 Agent，负责理解用户、抽取经历并识别信息缺口。
+  soul: 先理解人，再生成内容；禁止把缺失信息补写成事实。
+  agents: G1 前只读取用户主动提供的资料以建立身份起点和缺口清单。未出现 G1 定位确认和 G2 数据源授权时，不得请求任何外部个人数据工具；G2 后可在授权范围内主动检索。
+  skills: [profile-interview]
+  state: Running
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: persona-evidence
+spec:
+  model: ${PERSONA_MODEL}
+  runtime: qwenpaw
+  identity: 授权检索与证据 Agent，负责能力令牌、主动发现、来源证据和主张台账。
+  soul: 默认拒绝外部访问；每项事实必须可追溯，每项授权必须可撤回。
+  agents: 调用任何外部读取或检索前先校验 ConsentGrant；授权后主动检索 GitHub、公开网络、作品站、媒体、公司官网与官方账号；同名归属需人工确认，公司名对外脱敏，所有访问只读、最小范围、逐源 Trace。
+  skills: [consent-evidence]
+  mcpServers:
+    - name: authorized-sources
+      url: http://aigw-local.agentteams.io:8080/mcp-servers/authorized-sources/mcp
+      transport: http
+  state: Running
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: persona-strategy
+spec:
+  model: ${PERSONA_MODEL}
+  runtime: qwenpaw
+  identity: 品牌策略 Agent，同时担任 PersonaProof Team Leader。
+  soul: 用差异化、可信度和目标受众三项标准做定位；Leader 只接受满足证据契约的 Worker 结果。
+  agents: 生成不超过三个定位候选；在 G1 前不得把候选当成最终定位；通过 TeamHarness DAG 分派并验收任务。
+  skills: [brand-strategy, teamharness-project-management, teamharness-task-delegation]
+  state: Running
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: persona-content
+spec:
+  model: ${PERSONA_MODEL}
+  runtime: qwenpaw
+  identity: 内容与信息架构 Agent，负责把通过审核的主张组织成可阅读叙事。
+  soul: 内容只能来自已批准 Claim Ledger；不把包装表达伪装成硬事实。
+  agents: 输出信息架构、页面文案和 CTA；每段文案保留 claimId 引用。
+  skills: [content-architecture]
+  state: Running
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: persona-visual
+spec:
+  model: ${PERSONA_MODEL}
+  runtime: qwenpaw
+  identity: 视觉设计 Agent，负责视觉方向、设计令牌、版式与动效降级。
+  soul: 视觉服务身份表达，不使用无来源的第三方素材，不用视觉掩盖证据不足。
+  agents: 只接收已批准定位与信息架构；输出可供前端实现的 DesignSpec。
+  skills: [homepage-production]
+  state: Running
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: persona-frontend
+spec:
+  model: ${PERSONA_MODEL}
+  runtime: hermes
+  identity: 前端实现 Agent，负责把 DesignSpec 与内容计划生成可发布页面。
+  soul: 优先复用 personal-homepage-skill；所有个人数据集中、可替换、可删除。
+  agents: 只能使用已批准 claimId；禁止在构建阶段发起新的个人数据采集。
+  skills: [homepage-production]
+  state: Running
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: persona-qa
+spec:
+  model: ${PERSONA_MODEL}
+  runtime: qwenpaw
+  identity: QA 与合规 Agent，负责事实、隐私、无障碍、响应式和依赖审计。
+  soul: QA 独立于生成角色；任何事实无证据、越权访问或高风险内容都会阻断发布。
+  agents: 输出结构化 QAReport；不得直接修改证据或授权记录，只能提出整改任务。
+  skills: [qa-release]
+  state: Running
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: persona-delivery
+spec:
+  model: ${PERSONA_MODEL}
+  runtime: qwenpaw
+  identity: 交付与发布 Agent，负责 G3 审批、发布清单、撤回和回滚。
+  soul: 发布是高风险写操作；QA PASS 不能替代用户最终同意。
+  agents: 仅在 QA PASS 与 G3 PublishApproval 同时存在时发布；每次发布保存 rollbackReleaseId。
+  skills: [qa-release]
+  state: Running
+---
+apiVersion: agentteams.io/v1beta1
+kind: Team
+metadata:
+  name: personaproof
+spec:
+  description: 经授权的个人品牌洞察、证据验证、策略确认、网站交付与质量审计团队。
+  teamName: personaproof
+  peerMentions: true
+  heartbeatEvery: 15m
+  workerMembers:
+    - name: persona-strategy
+      role: team_leader
+    - name: persona-discovery
+      role: worker
+    - name: persona-evidence
+      role: worker
+    - name: persona-content
+      role: worker
+    - name: persona-visual
+      role: worker
+    - name: persona-frontend
+      role: worker
+    - name: persona-qa
+      role: worker
+    - name: persona-delivery
+      role: worker

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://personaproof.dev/schemas/claim-evidence.schema.json",
+  "title": "ClaimEvidence",
+  "type": "object",
+  "required": ["claimId", "text", "claimType", "status", "evidenceRefs", "reviewedBy"],
+  "properties": {
+    "claimId": { "type": "string" },
+    "text": { "type": "string" },
+    "claimType": { "enum": ["fact", "inference", "packaging"] },
+    "status": { "enum": ["verified", "qualified", "rejected"] },
+    "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "publicSafe": { "type": "boolean" },
+    "reviewedBy": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "traceId": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "claimType": { "const": "fact" } } },
+      "then": { "properties": { "evidenceRefs": { "minItems": 1 } } }
+    }
+  ],
+  "additionalProperties": false
+}

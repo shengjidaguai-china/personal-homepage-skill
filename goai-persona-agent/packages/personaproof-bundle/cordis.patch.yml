@@ -1,0 +1,7 @@
+- insert:
+    - id: personaproof
+      name: '@powerycy/dsh-personaproof-plugin'
+      config:
+        caseRoot: '../..'
+        agentTeamsManifest: '../../agentteams/persona-team.yaml'
+        maximumScenarios: 5

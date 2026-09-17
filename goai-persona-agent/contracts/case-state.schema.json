@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://personaproof.dev/schemas/case-state.schema.json",
+  "title": "PersonaCaseState",
+  "type": "object",
+  "required": ["caseId", "version", "stage", "artifacts", "traceId"],
+  "properties": {
+    "caseId": { "type": "string" },
+    "version": { "type": "integer", "minimum": 1 },
+    "stage": { "enum": ["intake", "position-review", "source-consent", "evidence", "strategy", "build", "qa", "publish-review", "published", "rolled-back"] },
+    "approvedPositionId": { "type": ["string", "null"] },
+    "activeGrantIds": { "type": "array", "items": { "type": "string" } },
+    "artifacts": { "type": "object", "additionalProperties": { "type": "string" } },
+    "releaseId": { "type": ["string", "null"] },
+    "rollbackReleaseId": { "type": ["string", "null"] },
+    "traceId": { "type": "string" }
+  },
+  "additionalProperties": false
+}

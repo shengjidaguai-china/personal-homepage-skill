@@ -1,0 +1,12 @@
+{
+  "name": "@powerycy/dsh-personaproof-bundle",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "files": ["cordis.patch.yml"],
+  "dsh": {
+    "bundle": {
+      "patch": "cordis.patch.yml"
+    }
+  }
+}
